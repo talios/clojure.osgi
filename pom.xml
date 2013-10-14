@@ -33,7 +33,7 @@
 		<dependency>
 			<groupId>org.clojure</groupId>
 			<artifactId>clojure</artifactId>
-			<version>${clojure-version}</version>
+			<version>[${clojure-version}]</version>
 			<scope>provided</scope>
 			<type>jar</type>
 		</dependency>
@@ -61,7 +61,7 @@
                         <Bundle-Activator>clojure.osgi.internal.ClojureOSGiActivator</Bundle-Activator>
                         <Bundle-ActivationPolicy>lazy</Bundle-ActivationPolicy>
                         <Embed-Dependency>
-                            clojure
+                            clojure;inline=true
                         </Embed-Dependency>
 	                      <Import-Package>
                             <!--${project.artifactId}; version=$(Bundle-Version),-->
@@ -72,7 +72,7 @@
                         	clojure.osgi.*; version="${project.version}"
                         </Export-Package>
                         <_exportcontents>
-                        	org.clojure; version="${clojure-version}",
+                        	org.clojure.*; version="${clojure-version}",
                         	clojure.*;  version="${clojure-version}"
                         </_exportcontents>
                         <DynamicImport-Package>*</DynamicImport-Package>
