@@ -5,11 +5,11 @@
 	<groupId>clojure.osgi</groupId>
 	<artifactId>clojure.osgi</artifactId>
 	<packaging>bundle</packaging>
-	<version>1.5.1-talios.001</version>
+	<version>1.6.0-alpha3-1</version>
 	<name>ClojureOSGI</name>
 
 	<properties>
-		<clojure-version>1.5.1</clojure-version>
+		<clojure-version>1.6.0-alpha3</clojure-version>
 	</properties>
 
 	<dependencies>
