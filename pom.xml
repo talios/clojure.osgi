@@ -9,7 +9,7 @@
 	<name>ClojureOSGI</name>
 
 	<properties>
-		<clojure-version>1.6.0-alpha3</clojure-version>
+		<clojure-version>1.6.0-beta2</clojure-version>
 	</properties>
 
 	<dependencies>
