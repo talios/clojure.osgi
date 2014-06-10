@@ -5,7 +5,7 @@
 	<groupId>com.theoryinpractise</groupId>
 	<artifactId>clojure.osgi</artifactId>
 	<packaging>bundle</packaging>
-	<version>1.6.0-RC2-1</version>
+	<version>1.6.0-1</version>
 	<name>ClojureOSGI</name>
 
 	<properties>
