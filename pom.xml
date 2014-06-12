@@ -1,53 +1,118 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
 	 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.theoryinpractise</groupId>
-	<artifactId>clojure.osgi</artifactId>
-	<packaging>bundle</packaging>
-	<version>1.6.0-1</version>
-	<name>ClojureOSGI</name>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.theoryinpractise</groupId>
+    <artifactId>clojure.osgi</artifactId>
+    <packaging>bundle</packaging>
+    <version>1.6.0-1</version>
+    <name>ClojureOSGI</name>
+    <description>Clojure - OSGi-ified with support library.</description>
+    <url>https://github.com/talios/clojure.osgi</url>
 
-	<properties>
-		<clojure-version>1.6.0</clojure-version>
-	</properties>
+    <scm>
+        <connection>scm:git:git@github.com:talios/clojure.osgi.git</connection>
+        <developerConnection>scm:git:git@github.com:talios/clojure.osgi.git</developerConnection>
+        <url>https://github.com/talios/clojure.osgi</url>
+    </scm>
 
-	<dependencies>
+    <properties>
+        <clojure-version>1.6.0</clojure-version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <licenses>
+        <license>
+            <name>Eclipse Public License</name>
+        </license>
+    </licenses>
 
-		<dependency>
-			<groupId>org.osgi</groupId>
-			<artifactId>org.osgi.core</artifactId>
-			<version>4.2.0</version>
-			<type>jar</type>
-		</dependency>
+    <distributionManagement>
+        <repository>
+            <id>sonatype-staging</id>
+            <name>oss.sonatype.org Staging Repository</name>
+            <url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+        <snapshotRepository>
+            <id>github-snapshots</id>
+            <name>oss.sonatype.org github Release Repository Snapshot Repository</name>
+            <url>http://oss.sonatype.org/content/repositories/github-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <profiles>
+        <profile>
+            <id>release</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.5</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
-		<dependency>
-			<groupId>org.osgi</groupId>
-			<artifactId>org.osgi.compendium</artifactId>
-			<version>4.2.0</version>
-			<type>jar</type>
-		</dependency>
+    <developers>
+        <developer>
+            <id>talios</id>
+            <name>Mark Derricutt</name>
+            <email>mark@talios.com</email>
+            <url>http://www.talios.com</url>
+        </developer>
+    </developers>
 
-		<dependency>
-			<groupId>org.clojure</groupId>
-			<artifactId>clojure</artifactId>
-			<version>[${clojure-version}]</version>
-			<scope>provided</scope>
-			<type>jar</type>
-		</dependency>
 
-	</dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.core</artifactId>
+            <version>4.2.0</version>
+            <type>jar</type>
+        </dependency>
 
-	<build>
-		<sourceDirectory>src/main/java</sourceDirectory>
-		<resources>
-			<resource>
-				<directory>src/main/clojure</directory>
-			</resource>
-		</resources>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.compendium</artifactId>
+            <version>4.2.0</version>
+            <type>jar</type>
+        </dependency>
 
-		<plugins>
-			            <plugin>
+        <dependency>
+            <groupId>org.clojure</groupId>
+            <artifactId>clojure</artifactId>
+            <version>[${clojure-version}]</version>
+            <scope>provided</scope>
+            <type>jar</type>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>src/main/clojure</directory>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
                 <version>2.4.0</version>
@@ -61,62 +126,62 @@
                         <Embed-Dependency>
                             clojure;inline=true
                         </Embed-Dependency>
-	                      <Import-Package>
+                        <Import-Package>
                             <!--${project.artifactId}; version=$(Bundle-Version),-->
                             !sun.misc,
                             clojure.*,
                         </Import-Package>
                         <Export-Package>
-                        	clojure.osgi.*; version="${project.version}"
+                            clojure.osgi.*; version="${project.version}"
                         </Export-Package>
                         <_exportcontents>
-                        	org.clojure.*; version="${clojure-version}",
-                        	clojure.*;  version="${clojure-version}"
+                            org.clojure.*; version="${clojure-version}",
+                            clojure.*; version="${clojure-version}"
                         </_exportcontents>
                         <DynamicImport-Package>*</DynamicImport-Package>
                     </instructions>
                 </configuration>
             </plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
-					<meminitial>128m</meminitial>
-					<maxmem>512m</maxmem>
-				</configuration>
-			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                    <meminitial>128m</meminitial>
+                    <maxmem>512m</maxmem>
+                </configuration>
+            </plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<phase>package</phase>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
-	<repositories>
-		<repository>
-			<id>clojars</id>
-			<url>http://clojars.org/repo/</url>
-		</repository>
-		<repository>
-			<id>clojure</id>
-			<url>http://build.clojure.org/releases</url>
-		</repository>
-		<repository>
-			<id>central</id>
-			<url>http://repo1.maven.org/maven2</url>
-		</repository>
-	</repositories>
+    <repositories>
+        <repository>
+            <id>clojars</id>
+            <url>http://clojars.org/repo/</url>
+        </repository>
+        <repository>
+            <id>clojure</id>
+            <url>http://build.clojure.org/releases</url>
+        </repository>
+        <repository>
+            <id>central</id>
+            <url>http://repo1.maven.org/maven2</url>
+        </repository>
+    </repositories>
 </project>
