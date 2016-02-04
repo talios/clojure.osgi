@@ -3,7 +3,7 @@
     <groupId>com.theoryinpractise</groupId>
     <artifactId>clojure.osgi</artifactId>
     <packaging>bundle</packaging>
-    <version>1.8.0-1-SNAPSHOT</version>
+    <version>1.8.0-1</version>
     <name>ClojureOSGI</name>
     <description>Clojure - OSGi-ified with support library.</description>
     <url>https://github.com/talios/clojure.osgi</url>
@@ -12,7 +12,7 @@
         <connection>scm:git:git@github.com:talios/clojure.osgi.git</connection>
         <developerConnection>scm:git:git@github.com:talios/clojure.osgi.git</developerConnection>
         <url>https://github.com/talios/clojure.osgi</url>
-      <tag>HEAD</tag>
+      <tag>clojure.osgi-1.8.0-1</tag>
   </scm>
 
     <properties>
