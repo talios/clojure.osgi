@@ -98,7 +98,16 @@
             <version>[${clojure-version}]</version>
             <type>jar</type>
         </dependency>
-
+        <dependency>
+            <groupId>org.clojure</groupId>
+            <artifactId>core.specs.alpha</artifactId>
+            <version>0.1.24</version>
+        </dependency>
+        <dependency>
+            <groupId>org.clojure</groupId>
+            <artifactId>spec.alpha</artifactId>
+            <version>0.1.143</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -122,7 +131,9 @@
                         <Bundle-Activator>clojure.osgi.internal.ClojureOSGiActivator</Bundle-Activator>
                         <Bundle-ActivationPolicy>lazy</Bundle-ActivationPolicy>
                         <Embed-Dependency>
-                            clojure;inline=true
+                            clojure;inline=true,
+                            spec.alpha;inline=true,
+                            core.specs.alpha;inline=true
                         </Embed-Dependency>
                         <Import-Package>
                             <!--${project.artifactId}; version=$(Bundle-Version),-->
