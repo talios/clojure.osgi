@@ -31,7 +31,7 @@
         <repository>
             <id>sonatype-staging</id>
             <name>oss.sonatype.org Staging Repository</name>
-            <url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
         <snapshotRepository>
             <id>sonatype-snapshots</id>
@@ -200,15 +200,11 @@
     <repositories>
         <repository>
             <id>clojars</id>
-            <url>http://clojars.org/repo/</url>
-        </repository>
-        <repository>
-            <id>clojure</id>
-            <url>http://build.clojure.org/releases</url>
+            <url>https://clojars.org/repo/</url>
         </repository>
         <repository>
             <id>central</id>
-            <url>http://repo1.maven.org/maven2</url>
+            <url>https://repo1.maven.org/maven2</url>
         </repository>
     </repositories>
 </project>
