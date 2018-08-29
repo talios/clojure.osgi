@@ -1,4 +1,6 @@
 (ns clojure.osgi.core
+  (:require
+    [clojure.string :as string])
   (:import [org.osgi.framework Bundle])
   (:import [clojure.osgi BundleClassLoader IClojureOSGi RunnableWithException])
   (:import [clojure.lang Namespace]))
@@ -152,7 +154,8 @@
   "Extracts bundle ID from resource URLs in when the bundle ID is at
   the beginning of the host part of a resource URL.
   This is known to be true for both Eclipse/Equinox and current Apache Felix."
-  (let [host (.getHost url) dot (.indexOf host  (int \.))]
+  (let [host (last (string/split (.getHost url) #"_"))
+        dot (.indexOf host  (int \.))]
     (Long/parseLong
       (if (and (>= dot 0) (< dot (- (count host) 1)))
         (.substring host 0 dot) host))))
