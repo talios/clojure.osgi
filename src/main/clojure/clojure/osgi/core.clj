@@ -95,7 +95,7 @@
 )
 
 
-(defonce 
+(defonce
   ^{:private true :dynamic true}
   *currently-loading* nil)
 
@@ -116,16 +116,16 @@
 )
 
 (defn- libspecs [args]
-  (flatten 
-    (map 
+  (flatten
+    (map
 	    (fn [arg]
 	      (cond
-	        (keyword arg) 
+	        (keyword arg)
 	          arg
-	
-	        (and (vector? arg) (or (nil? (second arg)) (keyword? (second arg)))) 
+
+	        (and (vector? arg) (or (nil? (second arg)) (keyword? (second arg))))
 	          (first arg)
-	
+
 	        :default
 	          (let [[prefix & args] arg]
 	             (map #(str (name prefix) "."  (if (coll? %) (name (first %)) (name %))) args))
@@ -192,7 +192,7 @@
                  (if (instance? ClassNotFoundException (.getCause e))
                    (when osgi-debug (println "class not found: " cname))
                    (throw e)))))
-     
+
            (let [rname (str (root-resource lib) ".clj")]
              (when osgi-debug (println "trying to load as a resource"))
              (or (and forced-bundle
@@ -218,8 +218,8 @@
             (println (str "use " args " from " (.getSymbolicName *bundle*) ", currently loading: " *currently-loading*)))
           (check-libs (libspecs args)))
         (apply original args))))
-  
-  (alter-var-root (find-var (symbol "clojure.core" "require")) 
+
+  (alter-var-root (find-var (symbol "clojure.core" "require"))
     (fn [original]
       (fn [& args]
         (when *bundle*
@@ -276,7 +276,7 @@
           (original n))))))
 (alter-var-root (find-var (symbol "clojure.java.io" "resource"))
   (fn [original]
-    (fn 
+    (fn
       ([n]
         (if (not *bundle*)
           (do
@@ -297,7 +297,7 @@
                   (try
                     (set-context-classloader! new-loader)
                     (original n)
-                    (finally 
+                    (finally
                       (set-context-classloader! old-loader)))))
               (do
                 (when osgi-debug
@@ -313,8 +313,8 @@
 (defn with-bundle* [bundle force-direct function & params]
   (binding [*bundle* bundle]
     (clojure.osgi.internal.ClojureOSGi/withLoader (BundleClassLoader. bundle force-direct)
-      (if (instance? RunnableWithException function) 
-        function                                         
+      (if (instance? RunnableWithException function)
+        function
         (reify RunnableWithException
           (run [_]
             (if (seq? params)
