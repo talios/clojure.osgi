@@ -1,4 +1,6 @@
 (ns clojure.osgi.core
+  (:require
+    [clojure.string :as string])
   (:import [org.osgi.framework Bundle])
   (:import [clojure.osgi BundleClassLoader IClojureOSGi RunnableWithException])
   (:import [clojure.lang Namespace]))
@@ -95,7 +97,7 @@
 )
 
 
-(defonce 
+(defonce
   ^{:private true :dynamic true}
   *currently-loading* nil)
 
@@ -116,16 +118,16 @@
 )
 
 (defn- libspecs [args]
-  (flatten 
-    (map 
+  (flatten
+    (map
 	    (fn [arg]
 	      (cond
-	        (keyword arg) 
+	        (keyword arg)
 	          arg
-	
-	        (and (vector? arg) (or (nil? (second arg)) (keyword? (second arg)))) 
+
+	        (and (vector? arg) (or (nil? (second arg)) (keyword? (second arg))))
 	          (first arg)
-	
+
 	        :default
 	          (let [[prefix & args] arg]
 	             (map #(str (name prefix) "."  (if (coll? %) (name (first %)) (name %))) args))
@@ -152,7 +154,8 @@
   "Extracts bundle ID from resource URLs in when the bundle ID is at
   the beginning of the host part of a resource URL.
   This is known to be true for both Eclipse/Equinox and current Apache Felix."
-  (let [host (.getHost url) dot (.indexOf host  (int \.))]
+  (let [host (last (string/split (.getHost url) #"_"))
+        dot (.indexOf host  (int \.))]
     (Long/parseLong
       (if (and (>= dot 0) (< dot (- (count host) 1)))
         (.substring host 0 dot) host))))
@@ -192,7 +195,7 @@
                  (if (instance? ClassNotFoundException (.getCause e))
                    (when osgi-debug (println "class not found: " cname))
                    (throw e)))))
-     
+
            (let [rname (str (root-resource lib) ".clj")]
              (when osgi-debug (println "trying to load as a resource"))
              (or (and forced-bundle
@@ -218,8 +221,8 @@
             (println (str "use " args " from " (.getSymbolicName *bundle*) ", currently loading: " *currently-loading*)))
           (check-libs (libspecs args)))
         (apply original args))))
-  
-  (alter-var-root (find-var (symbol "clojure.core" "require")) 
+
+  (alter-var-root (find-var (symbol "clojure.core" "require"))
     (fn [original]
       (fn [& args]
         (when *bundle*
@@ -276,7 +279,7 @@
           (original n))))))
 (alter-var-root (find-var (symbol "clojure.java.io" "resource"))
   (fn [original]
-    (fn 
+    (fn
       ([n]
         (if (not *bundle*)
           (do
@@ -297,7 +300,7 @@
                   (try
                     (set-context-classloader! new-loader)
                     (original n)
-                    (finally 
+                    (finally
                       (set-context-classloader! old-loader)))))
               (do
                 (when osgi-debug
@@ -313,8 +316,8 @@
 (defn with-bundle* [bundle force-direct function & params]
   (binding [*bundle* bundle]
     (clojure.osgi.internal.ClojureOSGi/withLoader (BundleClassLoader. bundle force-direct)
-      (if (instance? RunnableWithException function) 
-        function                                         
+      (if (instance? RunnableWithException function)
+        function
         (reify RunnableWithException
           (run [_]
             (if (seq? params)
