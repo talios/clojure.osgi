@@ -17,8 +17,8 @@
 
     <properties>
         <clojure.version>1.9.0</clojure.version>
-        <core.specs.alpha.version>0.1.24</core.specs.alpha.version>
-        <spec.alpha.version>0.1.143</spec.alpha.version>
+        <core.specs.alpha.version>0.2.44</core.specs.alpha.version>
+        <spec.alpha.version>0.2.176</spec.alpha.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <licenses>
@@ -124,7 +124,7 @@
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
-                <version>3.5.1</version>
+                <version>4.0.0</version>
                 <extensions>true</extensions>
                 <configuration>
                     <obrRepository>NONE</obrRepository>
@@ -160,10 +160,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
+                <version>3.8.0</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <meminitial>128m</meminitial>
                     <maxmem>512m</maxmem>
                 </configuration>
