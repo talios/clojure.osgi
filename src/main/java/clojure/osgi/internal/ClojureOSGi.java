@@ -17,8 +17,8 @@ public class ClojureOSGi {
 	public static void initialize(final BundleContext aContext) throws Exception {
 		if (!s_Initialized) {
 			RT.var("clojure.osgi.core", "*clojure-osgi-bundle*", aContext.getBundle());
-			withLoader(ClojureOSGi.class.getClassLoader(), new RunnableWithException() {
-				public Object run() {
+			withLoader(ClojureOSGi.class.getClassLoader(), new RunnableWithException<Void>() {
+				public Void run() {
 					boolean pushed = false;
 					
 					try {
@@ -57,7 +57,7 @@ public class ClojureOSGi {
 		}
 	}
 
-	public static Object withLoader(ClassLoader aLoader, RunnableWithException aRunnable) throws Exception {
+	public static <T> T withLoader(ClassLoader aLoader, RunnableWithException<T> aRunnable) throws Exception {
 		try {
 			Var.pushThreadBindings(RT.map(Compiler.LOADER, aLoader));
 			return aRunnable.run();
