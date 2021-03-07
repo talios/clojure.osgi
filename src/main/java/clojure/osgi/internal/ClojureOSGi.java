@@ -47,7 +47,7 @@ public class ClojureOSGi {
 		try {
 			withBundle(aBundle, new RunnableWithException() {
 				public Object run() throws Exception {
-					REQUIRE.invoke(Symbol.intern(aName));
+					REQUIRE.invoke(Symbol.intern(aName), Keyword.intern("reload"));
 					return null;
 				}
 			});

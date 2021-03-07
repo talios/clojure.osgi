@@ -17,7 +17,6 @@ import clojure.lang.Var;
 import clojure.osgi.RunnableWithException;
 
 public class ExtenderTracker extends BundleTracker {
-	private Set<Long> requireProcessed = new HashSet<Long>();
 	private Set<Long> active = new HashSet<Long>();
 	private ServiceTracker logTracker;
 	private LogService log = new StreamLog(System.out);
@@ -49,14 +48,12 @@ public class ExtenderTracker extends BundleTracker {
 	}
 
 	public Object addingBundle(Bundle bundle, BundleEvent event) {
-		if (!requireProcessed.contains(bundle.getBundleId())) {
+		if (bundle != null && event != null && event.getType() == BundleEvent.STARTING) {
 			processRequire(bundle);
-			requireProcessed.add(bundle.getBundleId());
 		}
 
 		if ((bundle.getState() == Bundle.STARTING || bundle.getState() == Bundle.ACTIVE)
 				&& !active.contains(bundle.getBundleId())) {
-
 			try {
 				invokeActivatorCallback(CallbackType.START, bundle);
 			} finally {
