@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * Copyright (c) 2009 Laurent Petit and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,7 +7,7 @@
  *
  * Contributors: 
  *    Laurent PETIT - initial API and implementation
- *******************************************************************************/
+ */
 
 package clojure.osgi;
 
@@ -16,25 +16,26 @@ import java.net.URL;
 import org.osgi.framework.Bundle;
 
 public class BundleClassLoader extends ClassLoader {
+
 	private Bundle _bundle;
 	private boolean _forceDirect;
 
-	public BundleClassLoader(Bundle bundle) {
+	public BundleClassLoader(final Bundle bundle) {
 		this(bundle, false);
 	}
 
-	public BundleClassLoader(Bundle bundle, boolean forceDirect) {
+	public BundleClassLoader(final Bundle bundle, final boolean forceDirect) {
 		_bundle = bundle;
 		_forceDirect = forceDirect;
 	}
 
 	@Override
-	protected Class<?> findClass(String name) throws ClassNotFoundException {
+	protected Class<?> findClass(final String name) throws ClassNotFoundException {
 		return _bundle.loadClass(name);
 	}
 
 	@Override
-	public URL getResource(String name) {
+	public URL getResource(final String name) {
 		if(_forceDirect) {
 			return _bundle.getEntry(name);
 		}
@@ -50,4 +51,5 @@ public class BundleClassLoader extends ClassLoader {
         sb.append('}');
         return sb.toString();
     }
+
 }
