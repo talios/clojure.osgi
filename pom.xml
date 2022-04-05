@@ -3,7 +3,7 @@
     <groupId>com.theoryinpractise</groupId>
     <artifactId>clojure.osgi</artifactId>
     <packaging>bundle</packaging>
-    <version>1.11.2-SNAPSHOT</version>
+    <version>1.11.4-SNAPSHOT</version>
     <name>ClojureOSGI</name>
     <description>Clojure - OSGi-ified with support library.</description>
     <url>https://github.com/talios/clojure.osgi</url>
@@ -16,7 +16,7 @@
   </scm>
 
     <properties>
-        <clojure.version>1.11</clojure.version>
+        <clojure.version>1.11.1</clojure.version>
         <core.specs.alpha.version>0.2.62</core.specs.alpha.version>
         <spec.alpha.version>0.3.218</spec.alpha.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
