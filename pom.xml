@@ -16,9 +16,9 @@
   </scm>
 
     <properties>
-        <clojure.version>1.11.1</clojure.version>
-        <core.specs.alpha.version>0.2.62</core.specs.alpha.version>
-        <spec.alpha.version>0.3.218</spec.alpha.version>
+        <clojure.version>1.11.2</clojure.version>
+        <core.specs.alpha.version>0.3.70</core.specs.alpha.version>
+        <spec.alpha.version>0.4.233</spec.alpha.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <licenses>
