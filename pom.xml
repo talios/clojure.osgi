@@ -3,7 +3,7 @@
     <groupId>com.theoryinpractise</groupId>
     <artifactId>clojure.osgi</artifactId>
     <packaging>bundle</packaging>
-    <version>1.11.4-SNAPSHOT</version>
+    <version>1.12.2-SNAPSHOT</version>
     <name>ClojureOSGI</name>
     <description>Clojure - OSGi-ified with support library.</description>
     <url>https://github.com/talios/clojure.osgi</url>
@@ -12,8 +12,8 @@
         <connection>scm:git:git@github.com:talios/clojure.osgi.git</connection>
         <developerConnection>scm:git:git@github.com:talios/clojure.osgi.git</developerConnection>
         <url>https://github.com/talios/clojure.osgi</url>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
 
     <properties>
         <clojure.version>1.11.2</clojure.version>
@@ -39,35 +39,6 @@
             <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
-    <profiles>
-        <profile>
-            <id>release</id>
-            <activation>
-                <property>
-                    <name>performRelease</name>
-                    <value>true</value>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <version>3.1.0</version>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 
     <developers>
         <developer>
@@ -132,10 +103,7 @@
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Activator>clojure.osgi.internal.ClojureOSGiActivator</Bundle-Activator>
                         <Bundle-ActivationPolicy>lazy</Bundle-ActivationPolicy>
-                        <Embed-Dependency>
-                            clojure;inline=true,
-                            spec.alpha;inline=true,
-                            core.specs.alpha;inline=true
+                        <Embed-Dependency> clojure;inline=true, spec.alpha;inline=true, core.specs.alpha;inline=true
                         </Embed-Dependency>
                         <Import-Package>
                             !sun.misc,
@@ -155,6 +123,21 @@
                         <DynamicImport-Package>*</DynamicImport-Package>
                     </instructions>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
