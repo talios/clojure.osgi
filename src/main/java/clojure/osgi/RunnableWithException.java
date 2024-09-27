@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * Copyright (c) 2009 Laurent Petit and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,10 +7,10 @@
  *
  * Contributors: 
  *    Laurent PETIT - initial API and implementation
- *******************************************************************************/
+ */
 
 package clojure.osgi;
 
-public interface RunnableWithException {
-	Object run() throws Exception;
+public interface RunnableWithException<T> {
+	T run() throws Exception;
 }

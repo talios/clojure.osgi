@@ -8,6 +8,7 @@ import org.osgi.framework.BundleContext;
 import clojure.osgi.RunnableWithException;
 
 public class ClojureOSGi {
+
 	static final private Var REQUIRE = RT.var("clojure.core", "require");
 	static final private Var WITH_BUNDLE = RT.var("clojure.osgi.core", "with-bundle*");
 	static final private Var BUNDLE = RT.var("clojure.osgi.core", "*bundle*").setDynamic();
@@ -17,8 +18,8 @@ public class ClojureOSGi {
 	public static void initialize(final BundleContext aContext) throws Exception {
 		if (!s_Initialized) {
 			RT.var("clojure.osgi.core", "*clojure-osgi-bundle*", aContext.getBundle());
-			withLoader(ClojureOSGi.class.getClassLoader(), new RunnableWithException() {
-				public Object run() {
+			withLoader(ClojureOSGi.class.getClassLoader(), new RunnableWithException<Void>() {
+				public Void run() {
 					boolean pushed = false;
 					
 					try {
@@ -43,7 +44,7 @@ public class ClojureOSGi {
 		}
 	}
 
-	public static void require(Bundle aBundle, final String aName) {
+	public static void require(final Bundle aBundle, final String aName) {
 		try {
 			withBundle(aBundle, new RunnableWithException() {
 				public Object run() throws Exception {
@@ -57,7 +58,7 @@ public class ClojureOSGi {
 		}
 	}
 
-	public static Object withLoader(ClassLoader aLoader, RunnableWithException aRunnable) throws Exception {
+	public static <T> T withLoader(final ClassLoader aLoader, final RunnableWithException<T> aRunnable) throws Exception {
 		try {
 			Var.pushThreadBindings(RT.map(Compiler.LOADER, aLoader));
 			return aRunnable.run();
@@ -67,18 +68,8 @@ public class ClojureOSGi {
 		}
 	}
 	
-	/*
-	public static void withLoader(ClassLoader aLoader, final Runnable aRunnable) throws Exception {
-		withLoader(aLoader, new RunnableWithException() {
-			public Object run() throws Exception {
-				aRunnable.run();
-				
-				return null;
-			}
-		});
-	}*/
-	
-	static Object withBundle(Bundle aBundle, final RunnableWithException aCode) throws Exception {
+	static Object withBundle(final Bundle aBundle, final RunnableWithException aCode) throws Exception {
 		return WITH_BUNDLE.invoke(aBundle, false, aCode);
 	}
+
 }
