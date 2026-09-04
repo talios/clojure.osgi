@@ -17,7 +17,7 @@
 
     <properties>
         <version.njord>0.9.10</version.njord>
-        <clojure.version>1.12.1</clojure.version>
+        <clojure.version>1.12.6</clojure.version>
         <core.specs.alpha.version>0.6.127-alpha9</core.specs.alpha.version>
         <spec.alpha.version>0.6.249</spec.alpha.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
