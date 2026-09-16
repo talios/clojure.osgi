@@ -4,11 +4,11 @@ import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.util.tracker.BundleTracker;
 
-
 public class ClojureOSGiActivator implements BundleActivator {
+
 	private BundleTracker tracker;
 
-	public void start(BundleContext context) throws Exception {
+	public void start(final BundleContext context) throws Exception {
 		ClassLoader clojureClassLoader = ClojureOSGiActivator.class.getClassLoader();
 		ClassLoader priorClassLoader = Thread.currentThread().getContextClassLoader();
 
@@ -22,7 +22,8 @@ public class ClojureOSGiActivator implements BundleActivator {
 		}
 	}
 
-	public void stop(BundleContext context) throws Exception {
+	public void stop(final BundleContext context) throws Exception {
 		tracker.close();
 	}
+
 }

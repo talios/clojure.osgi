@@ -17,6 +17,7 @@ import clojure.lang.Var;
 import clojure.osgi.RunnableWithException;
 
 public class ExtenderTracker extends BundleTracker {
+
 	private Set<Long> requireProcessed = new HashSet<Long>();
 	private Set<Long> active = new HashSet<Long>();
 	private ServiceTracker logTracker;
@@ -26,7 +27,7 @@ public class ExtenderTracker extends BundleTracker {
 		START, STOP
 	}
 
-	public ExtenderTracker(BundleContext context) {
+	public ExtenderTracker(final BundleContext context) {
 		super(context, Bundle.STARTING | Bundle.ACTIVE | Bundle.STOPPING, null);
 
 		logTracker = new ServiceTracker(context,
@@ -48,7 +49,7 @@ public class ExtenderTracker extends BundleTracker {
 		logTracker.open();
 	}
 
-	public Object addingBundle(Bundle bundle, BundleEvent event) {
+	public Object addingBundle(final Bundle bundle, final BundleEvent event) {
 		if (!requireProcessed.contains(bundle.getBundleId())) {
 			processRequire(bundle);
 			requireProcessed.add(bundle.getBundleId());
@@ -75,7 +76,7 @@ public class ExtenderTracker extends BundleTracker {
 		return null;
 	}
 
-	private void processRequire(Bundle bundle) {
+	private void processRequire(final Bundle bundle) {
 		String header = (String) bundle.getHeaders().get("Clojure-Require");
 
 		if (header != null) {
@@ -90,7 +91,7 @@ public class ExtenderTracker extends BundleTracker {
 		}
 	}
 
-    private String callbackFunctionName(CallbackType callback, String header) {
+    private String callbackFunctionName(final CallbackType callback, final String header) {
 		// TODO support callback function name customization. i.e.:
 		// Clojure-ActivatorNamespace:
 		// a.b.c.d;start-function="myStart";stop-function="myStop"
@@ -106,8 +107,7 @@ public class ExtenderTracker extends BundleTracker {
 		}
 	}
 
-	private void invokeActivatorCallback(CallbackType callback,
-			final Bundle bundle) {
+	private void invokeActivatorCallback(final CallbackType callback, final Bundle bundle) {
 		final String ns = (String) bundle.getHeaders().get(
 				"Clojure-ActivatorNamespace");
 		if (ns != null) {
@@ -140,12 +140,10 @@ public class ExtenderTracker extends BundleTracker {
 		}
 	}
 
-	public void modifiedBundle(Bundle bundle, BundleEvent event, Object object) {
-
+	public void modifiedBundle(final Bundle bundle, final BundleEvent event, final Object object) {
 	}
 
-	public void removedBundle(Bundle bundle, BundleEvent event, Object object) {
-
+	public void removedBundle(final Bundle bundle, final BundleEvent event, final Object object) {
 	}
 
 	public void close() {
